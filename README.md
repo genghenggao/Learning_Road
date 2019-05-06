@@ -1,3 +1,5 @@
+# 你只管努力，其他的交给天意~
+
 # Test
 
 ![Test_img](https://github.com/genghenggao/Test/blob/master/IMG/1.png)
