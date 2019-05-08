@@ -83,6 +83,7 @@ sudo ufw status
 ## 安装MySQL
 
 ```shell
+
 root@data1:~# docker pull mysql
 
 参照官方,未做端口映射
@@ -103,4 +104,16 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 183a3041aa0e        mysql               "docker-entrypoint.s…"   32 seconds ago      Up 23 seconds       0.0.0.0:3306->3306/tcp, 33060/tcp   mysql102
 70e3ef7b91fe        mysql               "docker-entrypoint.s…"   3 minutes ago       Up 3 minutes        3306/tcp, 33060/tcp                 mysql101
 ```
+
+
+
+## Docker常用操作
+
+```shell
+启动容器
+root@data1:~# docker start 42956764dd2e
+
+```
+
+
 
