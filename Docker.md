@@ -107,12 +107,148 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 
 
 
+## Ubuntu18.04远程连接docker中的MySQL遇到的问题
+
+==原因：mysql 8.0 默认使用 caching_sha2_password 身份验证机制；客户端不支持新的加密方式。==
+
+### 解决方案：
+
+修改用户（root）的加密方式
+
+### 步骤：
+
+#### 1、进入mysql容器内部
+
+```shell
+root@data1:~# docker exec -it mysql03 bash   ## mysql03是容器的别名，这里也可以用容器的id代替
+```
+
+#### 2、登录mysql
+
+```shell
+root@10da34fde054:/# mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 10
+Server version: 8.0.16 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+```
+
+#### 3、设置用户配置项
+
+##### 1）、查看用户信息
+```mysql
+mysql> select host,user,plugin,authentication_string from mysql.user;
++-----------+------------------+-----------------------+------------------------------------------------------------------------+
+| host      | user             | plugin                | authentication_string                                                  |
++-----------+------------------+-----------------------+------------------------------------------------------------------------+
+| %         | root             | caching_sha2_password | $A$005$
+                                                                4d2c9}W#Hi@`O]GSDrgPGLzF5qKWbkLV2jcOy48DW0HQoHjEuy0u7MpJBO4. |
+| localhost | mysql.infoschema | caching_sha2_password | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED |
+| localhost | mysql.session    | caching_sha2_password | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED |
+| localhost | mysql.sys        | caching_sha2_password | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED |
+| localhost | root             | caching_sha2_password | $A$005$Y(1dwQyu8mr(CKB:w8ev3gnZWxSWEeCi9D1C3L.p4vKcBwxNd0Aav/1CYu2 |
++-----------+------------------+-----------------------+------------------------------------------------------------------------+
+```
+
+![](IMG/微信截图_20190508215233.png)
+
+```
+mysql> ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '123456';
+Query OK, 0 rows affected (0.28 sec)
+
+mysql> flush privileges;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select host,user,plugin,authentication_string from mysql.user;
++-----------+------------------+-----------------------+------------------------------------------------------------------------+
+| host      | user             | plugin                | authentication_string                                                  |
++-----------+------------------+-----------------------+------------------------------------------------------------------------+
+| %         | root             | mysql_native_password | *6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9                              |
+| localhost | mysql.infoschema | caching_sha2_password | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED |
+| localhost | mysql.session    | caching_sha2_password | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED |
+| localhost | mysql.sys        | caching_sha2_password | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED |
+| localhost | root             | caching_sha2_password | $A$005$Y(1dwQyu8mr(CKB:w8ev3gnZWxSWEeCi9D1C3L.p4vKcBwxNd0Aav/1CYu2 |
++-----------+------------------+-----------------------+------------------------------------------------------------------------+
+```
+
+备注：host为 % 表示不限制ip localhost表示本机使用 plugin非mysql_native_password 则需要修改密码
+
+##### 2）、修改加密方式
+
+```shell
+mysql> ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY '123456';    ### 123456 mysql的登录密码
+Query OK, 0 rows affected (0.28 sec)
+
+mysql> flush privileges;
+Query OK, 0 rows affected (0.03 sec)
+
+#查看用户信息
+mysql> select host,user,plugin,authentication_string from mysql.user;
++-----------+------------------+-----------------------+------------------------------------------------------------------------+
+| host      | user             | plugin                | authentication_string                                                  |
++-----------+------------------+-----------------------+------------------------------------------------------------------------+
+| %         | root             | mysql_native_password | *6BB4837EB74329105EE4568DDA7DC67ED2CA2AD9                              |
+| localhost | mysql.infoschema | caching_sha2_password | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED |
+| localhost | mysql.session    | caching_sha2_password | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED |
+| localhost | mysql.sys        | caching_sha2_password | $A$005$THISISACOMBINATIONOFINVALIDSALTANDPASSWORDTHATMUSTNEVERBRBEUSED |
+| localhost | root             | caching_sha2_password | $A$005$Y(1dwQyu8mr(CKB:w8ev3gnZWxSWEeCi9D1C3L.p4vKcBwxNd0Aav/1CYu2 |
++-----------+------------------+-----------------------+------------------------------------------------------------------------+
+```
+
+![](IMG/微信截图_20190508215402.png)
+
+![](IMG/微信截图_20190508215740.png)
+
+
+
+[参考](https://blog.csdn.net/tyt_XiaoTao/article/details/84621087)
+
+
+
 ## Docker常用操作
 
 ```shell
 启动容器
 root@data1:~# docker start 42956764dd2e
 
+1、搜索镜像
+[root@localhost ~]# docker search tomcat
+2、拉取镜像
+[root@localhost ~]# docker pull tomcat
+3、根据镜像启动容器
+docker run --name mytomcat -d tomcat:latest
+4、docker ps  
+查看运行中的容器
+5、 停止运行中的容器
+docker stop  容器的id
+6、查看所有的容器
+docker ps -a
+7、启动容器
+docker start 容器id
+8、删除一个容器
+ docker rm 容器id
+9、启动一个做了端口映射的tomcat
+[root@localhost ~]# docker run -d -p 8888:8080 tomcat
+-d：后台运行
+-p: 将主机的端口映射到容器的一个端口    主机端口:容器内部的端口
+
+10、为了演示简单关闭了linux的防火墙
+service firewalld status ；查看防火墙状态
+service firewalld stop：临时关闭防火墙
+11、查看容器的日志
+docker logs container-name/container-id
+
+更多命令参看
+https://docs.docker.com/engine/reference/commandline/docker/
+可以参考每一个镜像的文档
 ```
 
 
