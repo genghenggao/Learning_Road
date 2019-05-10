@@ -90,9 +90,25 @@
 
 ​	org.Springframework.boot.autoconfigure.jdbc  ；
 
-1. 参考
+
+
+## SpringBoot+Gradle测试
 
 
 
+## JDBC测试
 
 
+
+```properties
+spring:
+    datasource:
+        username: root
+        password: 123456
+        url: jdbc:mysql://192.168.0.100:3307/jdbc
+        driver-class-name: com.mysql.jdbc.Driver
+```
+
+## 整合基本JDBC与数据源
+
+druid（阿里、成套的数据安全、监控） 、hikari（性能好）

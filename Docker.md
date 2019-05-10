@@ -83,7 +83,7 @@ sudo ufw status
 ## 安装MySQL
 
 ```shell
-
+拉取镜像
 root@data1:~# docker pull mysql
 
 参照官方,未做端口映射
@@ -109,7 +109,7 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 
 ## Ubuntu18.04远程连接docker中的MySQL遇到的问题
 
-==原因：mysql 8.0 默认使用 caching_sha2_password 身份验证机制；客户端不支持新的加密方式。==
+**原因：mysql 8.0 默认使用 caching_sha2_password 身份验证机制；客户端不支持新的加密方式。**
 
 ### 解决方案：
 
@@ -207,11 +207,7 @@ mysql> select host,user,plugin,authentication_string from mysql.user;
 
 ![](IMG/微信截图_20190508215740.png)
 
-
-
-[参考](https://blog.csdn.net/tyt_XiaoTao/article/details/84621087)
-
-
+[参考](https://blog.csdn.net/tyt_XiaoTao/article/details/84621087)：https://blog.csdn.net/tyt_XiaoTao/article/details/84621087
 
 ## Docker常用操作
 
