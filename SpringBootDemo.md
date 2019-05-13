@@ -45,7 +45,7 @@ book.name=SpringBoot
 
 3）、运行Debug
 
-![557713629993](IMG\1557713629993.png)
+![557713629993](IMG/1557713629993.png)
 
 ## Demo2：SpringBoot中@ConfigurationPropertie
 
