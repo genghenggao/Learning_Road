@@ -325,7 +325,7 @@ public class TestSpringController {
 
 3）、运行Run Test
 
-![1557732476288](IMG\1557732476288.png)
+![1557732476288](IMG/1557732476288.png)
 
 ### 二、分离启动类
 
