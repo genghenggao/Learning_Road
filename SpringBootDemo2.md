@@ -1,4 +1,4 @@
-## Demo7：FastJson解析JSON
+## Demo8：FastJson解析JSON
 
 ### 1）、pom.xml添加配置
 
@@ -191,7 +191,7 @@ springboot默认配置式UTF-8，需要开启响应配置，在appliaction.prope
 spring.http.encoding.force= true
 ```
 
-## Demo8：自定义拦截器
+## Demo9：自定义拦截器
 
 1）、在controller文件夹下写一个TestController.java文件
 

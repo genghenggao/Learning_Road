@@ -1,4 +1,4 @@
-## Demo8:定义全局异常处理器
+## Demo10:定义全局异常处理器
 
 1）、创建一个全局异常处理类;
 
@@ -82,7 +82,7 @@ public class SpringApp {
 
 ![](IMG/微信截图_20190514215002.png)
 
-## Demo9：异步调用
+## Demo11：异步调用
 
 SpringBoot提供了异步处理方式**@Async**。
 

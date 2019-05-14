@@ -448,7 +448,7 @@ public class SpringController {
 
 ![](IMG/微信截图_20190513223611.png)
 
-### Demo7：消息转换器
+## Demo7：消息转换器
 
 1）、编写消息转换器TesController.java。Spring默认是配置了消息转换器。
 
