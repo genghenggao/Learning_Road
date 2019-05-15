@@ -133,9 +133,9 @@ server.port=8080
 配置application.propert有的编译器不识别如下配置，需要改为上面的
 
 ```properties
-spring.datasource.driver-class-name==com.mysql.cj.jdbc.Driver
-spring.datasource.data-username== henggao
-spring.datasource.data-password== abc123
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.data-username= henggao
+spring.datasource.data-password= abc123
 spring.datasource.url=jdbc:mysql://127.0.0.1:3306/db2
 
 server.port=8080
