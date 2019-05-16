@@ -397,4 +397,4 @@ http://127.0.0.1:8080/findUser?name=Wade
 
 problem：
 
-过程中如果缺少字段，会报错~  实例可以产生空字段。
+过程中如果缺少id字段，会报错~  实例可以产生空字段。下面SpringBootDemo7中解决了，给id字段设置成Auto increment即可。
