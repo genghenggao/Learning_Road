@@ -50,3 +50,12 @@ mysql> select user,host from user;
 
 ![](IMg/微信截图_20190528202740.png)
 
+**注意：**如果仍然连接不上，尝试查看配置文件my.cnf是否注释了`# bind-address = 127.0.0.1`这一项，很多时候远程连不上是因为这个配置项的原因。
+
+查看端口号是否可以远程访问，我这里已经开放。
+
+```shell
+hduser@master:~$ netstat -tln
+```
+
+![](IMG/微信截图_20190528203623.png)
