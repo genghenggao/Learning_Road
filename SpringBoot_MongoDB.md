@@ -118,14 +118,14 @@ public class User {
     @Id
     private String id;
     private String username;
-    private String passwpord;
+    private String password;
 
     public User () {
         
     }
     public User (String username,String password) {
         this.username = username;
-        this.passwpord = password;
+        this.password = password;
     }
 
 }
@@ -233,7 +233,7 @@ public class UserController {
         // 如果存在
         if (user != null) {
 
-            if (password.equals(user.getPasswpord())) {
+            if (password.equals(user.getPassword())) {
                 // 如果密码正确
                 // 将用户信息放入到会话中...
                 request.setAttribute("user", user);
